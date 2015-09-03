@@ -5,7 +5,7 @@ from mongoengine import *
 from lib.id_generator import randomIdGenerator
 from stringfield import StringField
 
-class WishItem(Document):
+class WishItem(EmbeddedDocument):
 
   item_id = StringField(default=randomIdGenerator("WI"))
 
