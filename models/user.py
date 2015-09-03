@@ -3,8 +3,6 @@ __author__ = 'shaked'
 from mongoengine import *
 from lib.id_generator import randomIdGenerator
 from wish_item import WishItem
-from stringfield import StringField
-from djangotoolbox.fields import EmbeddedDocumentField, ListField
 
 class User(Document):
 
