@@ -20,13 +20,14 @@ class GeneralController(Blueprint):
 
       return [user.toMinimalJson() for user in users]
 
-    def handleFacebookLogin(self, facebook_id, location, address, friends_list, access_token):
+    def handleFacebookLogin(self, facebook_id, location, address, friends_list, access_token, email):
       user = User.objects(facebook_id=facebook_id).get()
       if user:
         user.current_location = location
         user.address = address
         user.friend_list = friends_list
         user.access_token = access_token
+        user.email = email
         user.save()
       else:
         user = User(facebook_id=facebook_id, current_location=location, address=address,
@@ -45,8 +46,6 @@ ctrl = GeneralController("general", __name__, static_folder="../public")
 
 @ctrl.route("/")
 def user_path():
-    print "mo3o"
-    print os.getcwd()
     #return ctrl.send_static_file(os.path.join(os.getcwd(), "public", "app", "index.html"))
     return ctrl.send_static_file("app/index.html")
 
@@ -64,6 +63,7 @@ def login_user():
   address = request.form.get("address")
   friends_list = request.form.get("friendsList")
   access_token = request.form.get("accessToken")
+  email = request.form.get("email")
 
-  result = ctrl.handleFacebookLogin(facebook_id, location, address, friends_list, access_token)
+  result = ctrl.handleFacebookLogin(facebook_id, location, address, friends_list, access_token, email)
   return jsonify(result=result)

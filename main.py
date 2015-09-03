@@ -17,6 +17,4 @@ app.register_blueprint(general_ctrl)
 
 if __name__ == "__main__":
   # Run the app.
-  print os.getcwd()
   app.run()
-  print "moo55"
