@@ -11,7 +11,7 @@ class Query (){
             if friend.location == WishItem.location:
                 relevantFriends.append(friend.user_id)
 
-
+        return relevantFriends
 
 
     # check if there's a friend's wish in the location the user's traveling to
