@@ -17,5 +17,4 @@ app.register_blueprint(general_ctrl)
 
 if __name__ == "__main__":
   # Run the app.
-  seed_all()
   app.run()
