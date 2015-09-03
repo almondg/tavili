@@ -7,7 +7,7 @@ from lib.id_generator import randomIdGenerator
 
 class FriendItem(EmbeddedDocument):
 
-  item_id = StringField(default=randomIdGenerator("WI"))
+  friend_id = StringField(default=randomIdGenerator("WI"))
 
   location = StringField()
 
