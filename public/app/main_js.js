@@ -25,7 +25,7 @@
 function loginWithID(response) {
       FB.api('/me?fields=id', function (response) {
           console.log("response is" + response.id);
-          window.location.href = 'home?id=' + response.id;
+          window.location.href = 'home.html?id=' + response.id;
       });
   };
 

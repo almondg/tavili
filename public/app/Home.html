@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Facebook Login JavaScript Example</title>
-  <meta charset="UTF-8">
-  <link type="text/css" rel="stylesheet" href="/public/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link type="text/css" rel="stylesheet" href="/public/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <title>Facebook Login JavaScript Example</title>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 </head>
+
+
 <body>
 <form action="action_page.php">
   Product:<br>
@@ -26,10 +28,11 @@
 
 
 
-<h2>My Wishlist!</h2>
-<table>
+<h2 align="center">My Wishlist!</h2>
+
+<table class="table table-striped">
     <thead><tr>
-        <th>Product</th><th>Location</th><th></th>
+        <th>Product</th><th>Location</th>
     </tr></thead>
     <tbody data-bind="foreach: wish_list_items">
     <tr>
@@ -60,10 +63,10 @@
 <div id="status">
 </div>
 
-<script src="/public/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/public/bower_components/knockout/dist/knockout.js"></script>
-<script src="/public/app/main_js.js"></script>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/knockout/dist/knockout.js"></script>
+<script src="../app/main_js.js"></script>
 <script>ko.applyBindings(new WishListViewModel());</script>
 
 </body>
