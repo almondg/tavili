@@ -20,6 +20,20 @@ class GeneralController(Blueprint):
 
       return [user.toMinimalJson() for user in users]
 
+    def handleFacebookLogin(self, facebook_id, location, address, friends_list):
+      user = User.objects(facebook_id=facebook_id).get()
+      if user:
+        user.current_location = location
+        user.address = address
+        user.friend_list = friends_list
+        user.save()
+      else:
+        user = User(facebook_id=facebook_id, current_location=location, address=address,
+                    friends_list=friends_list)
+        user.save()
+
+      return "Successfully Logged In."
+
 ctrl = GeneralController("general", __name__, static_folder="../public")
 
 # Signal handlers.
@@ -49,3 +63,13 @@ def get_user_info():
   if not info:
     return jsonify(err=("No user found for ID: '%s'" % g.user.user_id))
   return jsonify(info=info)
+
+@ctrl.route("/api/user/login/", methods=["POST"])
+def login_user():
+  facebook_id = request.form.get("facebookId")
+  location = request.form.get("currentLocation")
+  address = request.form.get("address")
+  friends_list = request.form.get("friendsList")
+
+  result = ctrl.handleFacebookLogin(facebook_id, location, address, friends_list)
+  return jsonify(result=result)

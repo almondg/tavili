@@ -1,30 +1,32 @@
 __author__ = 'Ronny'
 
-class Query (){
-    # check if there's a friend in the location of my new wish
-    # pre - a new wish in the users list
-    # returns - list of user_id of the friends in the new wish's location
+from models.all import *
 
-    def addToWishList(user,WishItem):
-        relevantFriends = []
-        for friend in user.friendList:
-            if friend.location == WishItem.location:
-                relevantFriends.append(friend.user_id)
-                print (friend.user_id, "can get you a " ,WishItem.product )
+class Query:
+  # check if there's a friend in the location of my new wish
+  # pre - a new wish in the users list
+  # returns - list of user_id of the friends in the new wish's location
 
-        return relevantFriends
+  def addToWishList(user, wish_item):
+    relevantFriends = []
+    for friend_id in user.friend_list:
+      friend = User.objects(user_id=friend_id).get()
+      if friend.location == wish_item.location:
+        relevantFriends.append(friend.user_id)
+        print (friend.user_id, "can get you a ", wish_item.product)
 
+    return relevantFriends
 
-    # check if there's a friend's wish in the location the user's traveling to
-    # returns - list of user_id of the friends that needs something from the users' location
+  # check if there's a friend's wish in the location the user's traveling to
+  # returns - list of user_id of the friends that needs something from the users' location
 
-    def travelToLocation (user,location):
-        relevantFriends = []
-        for friend in user.friendList:
-            for wish in friend.wishList:
-                if wish.loaction == location:
-                    relevantFriends.append(friend.user_id)
-                    print(friend.user_id ,"wants a " , wish.product)
+  def travelToLocation(user, location):
+    relevantFriends = []
+    for friend_id in user.friend_list:
+      friend = User.objects(user_id=friend_id).get()
+      for wish in friend.wishList:
+        if wish.loaction == location:
+          relevantFriends.append(friend.user_id)
+          print(friend.user_id, "wants a ", wish.product)
 
-        return relevantFriends
-}
+    return relevantFriends
