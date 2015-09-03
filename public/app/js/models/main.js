@@ -15,6 +15,8 @@ function MainModel(source) {
       return;
     }
 
+    self.res_view_model = new WishListViewModel();
+
     window.fbAsyncInit = function () {
       FB.init({
         appId: '419843501540998',
@@ -177,10 +179,11 @@ function MainModel(source) {
   }
 
 // Overall viewmodel for this screen, along with initial state
-  function WishListViewModel() {
+  function WishListViewModel(source) {
     var self = this;
 
     // Non-editable catalog data - would come from the server
+
     self.WishListDataArray = [
       {product: "item1", location: 'Israel'},
       {product: "item2", location: 'USA'},
@@ -189,17 +192,13 @@ function MainModel(source) {
     ];
 
     /**
-     *     self.WishListDataArray = somehow generate the array with source
-     */
+    self.WishListDataArray = ko.observableArray();
 
-    // Editable data
-    /**
-     self.wish_list_items = ko.observableArray([
-     new WishListItem({product: "item3", location: 'France'}),
-     new WishListItem({product: "item2", location: 'USA'})
-     ]);
-     */
-
+    var fb_id = "123456";
+    self.source.get_wishlist.create(fb_id).fail(function(error) {}).done(function(data) {
+      self.WishListDataArray(data.result);
+    });
+    */
     self.wish_list_items = [];
     for (var i = 0; i < self.WishListDataArray.length; i++) {
       self.wish_list_items.push(new WishListItem(self.WishListDataArray[i]));

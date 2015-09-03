@@ -36,4 +36,5 @@ var serverComm = new $.RestClient(
 // Add the relevant paths.
 serverComm.add("user");
 serverComm.user.add("info");
+serverComm.add("get_wishlist");
 

@@ -5,7 +5,7 @@ var mainController = null;
 
 $(function() {
   // Configure Knockout templating engine.
-  ko.remoteTemplateEngine.defaultPath = "/public/app/templates";
+  ko.remoteTemplateEngine.defaultPath = "/tavili/public/app/templates";
   ko.remoteTemplateEngine.defaultUseCache = false;
 
   // Initialize all controllers.
