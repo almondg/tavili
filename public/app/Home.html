@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Facebook Login JavaScript Example</title>
-<meta charset="UTF-8">
+  <title>Facebook Login JavaScript Example</title>
+  <meta charset="UTF-8">
+  <link type="text/css" rel="stylesheet" href="/public/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link type="text/css" rel="stylesheet" href="/public/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 </head>
 <body>
 <form action="action_page.php">
@@ -50,8 +52,10 @@
 <div id="status">
 </div>
 
-<script src="../bower_components/knockout/dist/knockout.js"></script>
-<script src="main_js.js"></script>
+<script src="/public/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/public/bower_components/knockout/dist/knockout.js"></script>
+<script src="/public/app/main_js.js"></script>
 <script>ko.applyBindings(new WishListViewModel());</script>
 
 </body>

@@ -11,6 +11,7 @@ class User(Document):
   fb_id = StringField()
   wishList = ListField(EmbeddedDocumentField(WishItem))
   friendList = ListField(EmbeddedDocumentField(FriendItem))
+  
 
 
   def toMinimalJson(self):
