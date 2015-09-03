@@ -5,6 +5,7 @@ import itertools
 from dateutil.parser import parse
 from flask import Blueprint, jsonify, request, g
 from mongoengine import Q
+import os
 
 from models.all import *
 
@@ -27,7 +28,11 @@ ctrl = GeneralController("general", __name__, static_folder="../public")
 #   if role == Login.Role.USER:
 #     ctrl.createNewWebCommunication(login.user, request.args.get("ref"))
 
-# User API paths.
+@ctrl.route("/")
+def user_path():
+    return ctrl.send_static_file(os.path.join("app", "index.html"))
+
+
 @ctrl.route("/api/user/info/")
 def get_user_info():
   info = ctrl.getUserInfo()
