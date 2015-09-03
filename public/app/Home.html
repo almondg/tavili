@@ -18,7 +18,7 @@
   <input type="submit" value="Submit">
 </form>
 
-<button onclick="logout_of_fb(response)">LOG OUT</button>
+<button onclick="logout_of_fb()">LOG OUT</button>
 
 <br/><br/><br/><br/>
 
@@ -38,7 +38,15 @@
 </table>
 
 <script>
-
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '419843501540998',
+            cookie: true,  // enable cookies to allow the server to access
+                           // the session
+            xfbml: true,  // parse social plugins on this page
+            version: 'v2.4' // use version 2.4
+        });
+    }
 </script>
 
 <!--

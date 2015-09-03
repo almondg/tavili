@@ -28,12 +28,17 @@ function loginWithID(response) {
           window.location.href = 'home.html?id=' + response.id;
       });
   };
-function logout_of_fb(){
-        FB.logout(function(response) {
-            console.log("User logged out successfully!!!");
-        });
-    };
 
+function logout_of_fb(){
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                FB.logout(function(response) {
+                    console.log("User logged out successfully!!!");
+                });
+            }
+        });
+    window.location.href = 'login.html';
+    }
 
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -52,7 +57,6 @@ function logout_of_fb(){
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      //window.location.href = 'Home.html';
       loginWithID(response);
       //testAPI();
     } else if (response.status === 'not_authorized') {
