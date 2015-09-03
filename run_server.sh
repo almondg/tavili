@@ -2,4 +2,4 @@
 
 export SERVER_ENV="production"
 
-python main.py &
+gunicorn main:app --log-file=-

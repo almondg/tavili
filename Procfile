@@ -1,1 +1,1 @@
-web: gunicorn main:app --log-file=-
+web: bash run_server.sh
