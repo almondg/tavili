@@ -3,6 +3,7 @@ __author__ = 'shaked'
 from mongoengine import *
 from lib.id_generator import randomIdGenerator
 from wish_item import WishItem
+from friend_item import FriendItem
 
 class User(Document):
 

@@ -4,9 +4,8 @@ from mongoengine import *
 
 from lib.id_generator import randomIdGenerator
 
-from stringfield import StringField
 
-class FriendItem(Document):
+class FriendItem(EmbeddedDocument):
 
   item_id = StringField(default=randomIdGenerator("WI"))
 
