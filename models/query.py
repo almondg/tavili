@@ -20,12 +20,14 @@ class Query:
     for friend_id in user.friend_list:
       friend = User.objects(user_id=friend_id).get()
       if friend.location == wish_item.location:
-        relevantFriends.append(friend.user_id)
-        print (friend.user_id, "can get you a ", wish_item.product)
+        relevantFriends.append(friend)
 
-    if len(relevantFriends) > 0:
-      self.mandrill_service.send("friendshipping@gmail.com", user.email, "Updates from FriendShipping App",
-                                 "You have a new friend want to fulfill your wish. Enter the app and connect your friend.")
+    for friend in relevantFriends:
+      msg = "".join([friend.name, " is in ", wish_item.location,
+                     " and can fulfill your wish to have a ",
+                    wish_item.product, ". Facebook him =)"])
+      self.mandrill_service.send("friendshipping@gmail.com", user.email,
+                                 "Updates from FriendShipping App", msg)
     return relevantFriends
 
   # check if there's a friend's wish in the location the user's traveling to
@@ -37,12 +39,20 @@ class Query:
       friend = User.objects(user_id=friend_id).get()
       for wish in friend.wishList:
         if wish.loaction == location:
-          relevantFriends.append(friend.user_id)
-          self.mandrill_service.send("friendshipping@gmail.com", friend.email, "Updates from FriendShipping App",
-                                 "You have a new friend want to fulfill your wish. Enter the app and connect your friend.")
+          relevantFriends.append({"friend": friend,
+                                  "wish": wish})
+          msg = "".join([friend.name, " is in ", wish.location,
+                        " and can fulfill your wish to have a ",
+                        wish.product, ". Facebook him =)"])
+          self.mandrill_service.send("friendshipping@gmail.com", friend.email,
+                                     "Updates from FriendShipping App", msg)
 
-    if len(relevantFriends) > 0:
-      self.mandrill_service.send("friendshipping@gmail.com", user.email, "Updates from FriendShipping App",
-                                 "You have a new friend you can help to fulfill his wish. Enter the app and connect your friend.")
+    for friend_and_wish in relevantFriends:
+      friend = friend_and_wish["friend"]
+      wish = friend_and_wish["wish"]
+      msg = "".join([friend.name, " wants a ", wish.product,
+                     " from ", wish.location, ". Help him =)"])
+      self.mandrill_service.send("friendshipping@gmail.com", user.email,
+                                 "Updates from FriendShipping App", msg)
 
     return relevantFriends
