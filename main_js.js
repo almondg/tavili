@@ -12,34 +12,6 @@
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 
-  window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '419843501540998',
-        cookie     : true,  // enable cookies to allow the server to access
-                            // the session
-        xfbml      : true,  // parse social plugins on this page
-        version    : 'v2.4' // use version 2.4
-      });
-
-      // Now that we've initialized the JavaScript SDK, we call
-      // FB.getLoginStatus().  This function gets the state of the
-      // person visiting this page and can return one of three states to
-      // the callback you provide.  They can be:
-      //
-      // 1. Logged into your app ('connected')
-      // 2. Logged into Facebook, but not your app ('not_authorized')
-      // 3. Not logged into Facebook and can't tell if they are logged into
-      //    your app or not.
-      //
-      // These three cases are handled in the callback function.
-
-      FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
-      });
-
-  };
-
-
   // This function is called when someone finishes with the Login
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
@@ -56,15 +28,12 @@ function loginWithID(response) {
           window.location.href = 'home.html?id=' + response.id;
       });
   };
+function logout_of_fb(){
+        FB.logout(function(response) {
+            console.log("User logged out successfully!!!");
+        });
+    };
 
-  // This function is called when someone finishes with the Login
-  // Button.  See the onlogin handler attached to it in the sample
-  // code below.
-  function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
-  }
 
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -98,6 +67,32 @@ function loginWithID(response) {
     }
   }
 
+function post(path, params, method) {
+    method = method || "post"; // Set method to post by default if not specified.
+
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+         }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////
 
 // Class to represent a row in the wishlist
@@ -109,37 +104,31 @@ function WishListItem(item_data) {
 }
 
 // Overall viewmodel for this screen, along with initial state
-function WishListViewModel(source) {
+function WishListViewModel() {
     var self = this;
 
     // Non-editable catalog data - would come from the server
     self.WishListDataArray = [
-        { item_name: "item1", location: 'Israel'},
-        { item_name: "item2", location: 'USA'},
-        { item_name: "item3", location: 'France'},
-        { item_name: "iphone4", location: 'UK' }
+        { product: "item1", location: 'Israel'},
+        { product: "item2", location: 'USA'},
+        { product: "item3", location: 'France'},
+        { product: "iphone4", location: 'UK' }
     ];
-    // Editable data
-    self.wish_list_items = ko.observableArray([
-        new WishListItem({item_name: "item3", location: 'France'}),
-        new WishListItem({item_name: "item2", location: 'USA'})
-    ]);
 
-  /**
-   *     self.WishListArray = somehow generate the array with source
-   *
-   *     self.wish_list_items = []
-   *     for (var i = 0; i < WishListArray.length; i++) {
-   *        wish_list_items.push(new WishListItem(WishListArray[i]));
-   *     }
-   *
-
-  // display all values
-
-      console.log(arr[i]);
-  }
-   *
+      /**
+   *     self.WishListDataArray = somehow generate the array with source
    */
-}
 
-ko.applyBindings(new WishListViewModel());
+    // Editable data
+    /**
+     self.wish_list_items = ko.observableArray([
+        new WishListItem({product: "item3", location: 'France'}),
+        new WishListItem({product: "item2", location: 'USA'})
+    ]);
+     */
+
+    self.wish_list_items = []
+    for (var i = 0; i < self.WishListDataArray.length; i++) {
+        self.wish_list_items.push(new WishListItem(self.WishListDataArray[i]));
+    }
+}

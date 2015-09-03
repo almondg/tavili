@@ -22,8 +22,9 @@
 
 <br/><br/><br/><br/>
 
-<h2>My Wishlist!</h2>
 
+
+<h2>My Wishlist!</h2>
 <table>
     <thead><tr>
         <th>Product</th><th>Location</th><th></th>
@@ -37,36 +38,6 @@
 </table>
 
 <script>
-function post(path, params, method) {
-    method = method || "post"; // Set method to post by default if not specified.
-
-    // The rest of this code assumes you are not using a library.
-    // It can be made less wordy if you use one.
-    var form = document.createElement("form");
-    form.setAttribute("method", method);
-    form.setAttribute("action", path);
-
-    for(var key in params) {
-        if(params.hasOwnProperty(key)) {
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", key);
-            hiddenField.setAttribute("value", params[key]);
-
-            form.appendChild(hiddenField);
-         }
-    }
-
-    document.body.appendChild(form);
-    form.submit();
-}
-
-    var logout_of_fb = function(){
-            FB.logout(function(response) {
-                console.log("User logged out successfully!!!");
-            });
-        }
-    };
 
 </script>
 
@@ -79,6 +50,9 @@ function post(path, params, method) {
 <div id="status">
 </div>
 
+<script src="public/bower_components/knockout/dist/knockout.js"></script>
 <script src="main_js.js"></script>
+<script>ko.applyBindings(new WishListViewModel());</script>
+
 </body>
 </html>
