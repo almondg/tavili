@@ -221,6 +221,7 @@ function logout_of_fb() {
     if (response.status === 'connected') {
       FB.logout(function (response) {
         console.log("User logged out successfully!!!");
+        window.location.href = 'index.html';
       });
     }
   });
