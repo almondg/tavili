@@ -2,4 +2,4 @@
 
 export SERVER_ENV="production"
 
-python main.py
+python main.py &
