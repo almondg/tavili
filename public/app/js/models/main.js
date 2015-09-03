@@ -91,7 +91,9 @@ function MainModel(source) {
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
+
       loginWithID(response);
+
       //testAPI();
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
@@ -183,6 +185,8 @@ function MainModel(source) {
 
 //once we are logged in, use this function to get the home page of the site!
 function loginWithID(response) {
+  console.log("In loginWithID");
+  getUserData();
   console.log(response);
   FB.api('/me?fields=id', function (response) {
     console.log(response);
