@@ -13,3 +13,4 @@ python-dateutil==2.4.0
 python-loaders==0.2.3
 requests==2.6.0
 wsgiref==0.1.2
+requests-facebook=0.2.0

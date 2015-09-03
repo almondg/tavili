@@ -20,12 +20,13 @@ class GeneralController(Blueprint):
 
       return [user.toMinimalJson() for user in users]
 
-    def handleFacebookLogin(self, facebook_id, location, address, friends_list):
+    def handleFacebookLogin(self, facebook_id, location, address, friends_list, access_token):
       user = User.objects(facebook_id=facebook_id).get()
       if user:
         user.current_location = location
         user.address = address
         user.friend_list = friends_list
+        user.access_token = access_token
         user.save()
       else:
         user = User(facebook_id=facebook_id, current_location=location, address=address,
@@ -70,6 +71,7 @@ def login_user():
   location = request.form.get("currentLocation")
   address = request.form.get("address")
   friends_list = request.form.get("friendsList")
+  access_token = request.form.get("accessToken")
 
-  result = ctrl.handleFacebookLogin(facebook_id, location, address, friends_list)
+  result = ctrl.handleFacebookLogin(facebook_id, location, address, friends_list, access_token)
   return jsonify(result=result)
