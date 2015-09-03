@@ -209,6 +209,7 @@ function MainModel(source) {
 
 //once we are logged in, use this function to get the home page of the site!
 function loginWithID(response) {
+  console.log(response);
   FB.api('/me?fields=id', function (response) {
     console.log("response is: " + response.id);
     //window.location.href = 'home.html?id=' + response.id;

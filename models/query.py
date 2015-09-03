@@ -1,7 +1,6 @@
 __author__ = 'Ronny'
 
-import facebook
-import requests
+from facepy import GraphAPI
 from models.all import *
 
 class Query:
@@ -19,11 +18,13 @@ class Query:
 
     token_app = ""
     if len(relevantFriends) > 0:
-      graphAPI = facebook.GraphAPI(user.access_token)
-      graphAPI.post(path="me/notifications",
-                    template="You Have a New Friend Want to Fulfill Your Wish!",
-                    href="http://intense-badlands-1277.herokuapp.com/",
-                    access_token=token_app)
+      graphAPI = GraphAPI(user.access_token)
+      graphAPI.post(
+                            path="me/notifications",
+                            template="You Have a New Friend Want to Fulfill Your Wish!",
+                            href="http://intense-badlands-1277.herokuapp.com/",
+                            access_token=token_app
+      )
     return relevantFriends
 
   # check if there's a friend's wish in the location the user's traveling to
