@@ -2,7 +2,7 @@ DEBUG = True
 
 # Database settings.
 MONGODB_SETTINGS = {
-  "db": "tavili",
+  "db": "heroku_t2vv4d0p",
   "host": "mongodb://tavili:tavilitavili99@ds035563.mongolab.com:35563/heroku_t2vv4d0p",
   "port": 35563,
 }
