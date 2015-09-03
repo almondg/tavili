@@ -5,6 +5,7 @@ var numPosts=ko.observable(0);
 var country=ko.observable(' ');
 var userAddress=ko.observable(' ');
 var userEmail=ko.observable(' ');
+var userName=ko.observable(' ');
 function printAll(){
     console.log("User ID: "+userID());
     console.log("User latest country post: "+country());
@@ -17,6 +18,14 @@ function getEmail(){
         var email=response.email;
         userEmail(email);
     });
+}
+function getName(){
+    FB.api('/me','GET', {},function(response) {
+        var name=response.name;
+        userName(name);
+
+  }
+);
 }
 function iteratePosts(){
     //console.log("Iterating");
@@ -62,7 +71,8 @@ function getUserData(){
     FB.api('/me','GET',{"fields":"id"},function(response) {
         userID(response.id);
         getFriendsIDs();
-            getEmail();
+        getEmail();
+        getName();
     });
 }
 function getFriends() {
@@ -72,6 +82,11 @@ function getFriends() {
 }
 userAddress.subscribe(function(value) {
     console.log("User address updated to ");
+    console.log(value);
+    //TODO send to server
+});
+userName.subscribe(function(value) {
+    console.log("Username updated to ");
     console.log(value);
     //TODO send to server
 });
