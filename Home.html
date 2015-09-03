@@ -18,6 +18,24 @@
   <input type="submit" value="Submit">
 </form>
 
+<button onclick="logout_of_fb(response)">LOG OUT</button>
+
+<br/><br/><br/><br/>
+
+<table style="width:100%">
+
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td>
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td>
+    <td>94</td>
+  </tr>
+</table>
+
 <script>
 function post(path, params, method) {
     method = method || "post"; // Set method to post by default if not specified.
@@ -42,6 +60,14 @@ function post(path, params, method) {
     document.body.appendChild(form);
     form.submit();
 }
+
+    var logout_of_fb = function(response){
+        if (response.status==='connected'){
+            FB.logout(function(response) {
+                console.log("User logged out successfully!!!");
+            });
+        }
+    };
 
 </script>
 
