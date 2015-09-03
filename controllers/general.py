@@ -20,7 +20,7 @@ class GeneralController(Blueprint):
 
       return [user.toMinimalJson() for user in users]
 
-    def handleFacebookLogin(self, facebook_id, location, address, friends_list, access_token, email):
+    def handleFacebookLogin(self, facebook_id, name, location, address, friends_list, access_token, email):
       user = User.objects(facebook_id=facebook_id).get()
       if user:
         user.current_location = location
@@ -30,11 +30,24 @@ class GeneralController(Blueprint):
         user.email = email
         user.save()
       else:
-        user = User(facebook_id=facebook_id, current_location=location, address=address,
-                    friends_list=friends_list)
+        user = User(facebook_id=facebook_id, name=name, current_location=location,
+                    address=address, friends_list=friends_list, access_token=access_token,
+                    email=email)
         user.save()
 
       return "Successfully Logged In."
+
+
+    def getUserWishList(self, facebook_id):
+      user = User.objects(facebook_id=facebook_id).get()
+      return user.wish_list
+
+    def handleAddToWishList(self, facebook_id, location, product):
+      user = User.objects(facebook_id=facebook_id).get()
+      q = Query()
+      q.addToWishList(user, WishItem(location,product))
+      return self.getUserWishList(facebook_id)
+
 
 ctrl = GeneralController("general", __name__, static_folder="../public")
 
@@ -59,11 +72,25 @@ def get_user_info():
 @ctrl.route("/api/user/login/", methods=["POST"])
 def login_user():
   facebook_id = request.form.get("facebookId")
+  name = request.form.get("name")
   location = request.form.get("currentLocation")
   address = request.form.get("address")
   friends_list = request.form.get("friendsList")
   access_token = request.form.get("accessToken")
   email = request.form.get("email")
 
-  result = ctrl.handleFacebookLogin(facebook_id, location, address, friends_list, access_token, email)
+  result = ctrl.handleFacebookLogin(facebook_id, name, location, address, friends_list, access_token, email)
   return jsonify(result=result)
+
+@ctrl.route("/add_to_wishlist", methods=["POST"])
+def add_to_wishlist():
+    product = request.form.get("product")
+    location = request.form.get("location")
+    facebook_id = request.form.get("fb_id")
+    result = ctrl.handleAddToWishList(facebook_id, location, product)
+    return jsonify(result=result)
+
+@ctrl.route("/get_wishlist/<fb_id>")
+def get_to_wishlist(fb_id):
+    result = ctrl.getUserWishList(fb_id)
+    return jsonify(result=result)
