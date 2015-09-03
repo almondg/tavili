@@ -25,7 +25,7 @@
 function loginWithID(response) {
       FB.api('/me?fields=id', function (response) {
           console.log("response is" + response.id);
-          window.location.href = 'home.html?id=' + response.id;
+          window.location.href = 'home?id=' + response.id;
       });
   };
 function logout_of_fb(){
@@ -127,7 +127,7 @@ function WishListViewModel() {
     ]);
      */
 
-    self.wish_list_items = []
+    self.wish_list_items = [];
     for (var i = 0; i < self.WishListDataArray.length; i++) {
         self.wish_list_items.push(new WishListItem(self.WishListDataArray[i]));
     }
