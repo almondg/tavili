@@ -3,12 +3,12 @@
 <head lang="en">
     <meta charset="UTF-8">
 
-    <link type="text/css" rel="stylesheet" href="/public/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="/public/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/tavili/public/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/tavili/public/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
     <link type='text/css' rel='stylesheet' href='http://fonts.googleapis.com/css?family=Montserrat'>
     <link type='text/css' rel='stylesheet' href='http://fonts.googleapis.com/css?family=Montserrat'>
     <link type='text/css' rel='stylesheet' href='http://sscol.jebal.comuv.com/css/font.css'>
-    <link type='text/css' rel='stylesheet' href='/public/app/styles/login.css'>
+    <link type='text/css' rel='stylesheet' href='/tavili/public/app/styles/login.css'>
 
     <title></title>
 </head>
@@ -17,19 +17,27 @@
     <div data-bind="template: { name: currentView }"></div>
 </div>
 
-<script src="/public/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/public/bower_components/jpillora/jquery.rest/dist/1/jquery.rest.min.js"></script>
-<script src="/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/public/bower_components/knockout/dist/knockout.js"></script>
-<script src="/public/bower_components/ko.remote-template-engine/dist/ko.remote-template-engine.min.js"></script>
-<script src="/public/bower_components/js-signals/dist/signals.min.js"></script>
-<script src="/public/bower_components/hasher/dist/js/hasher.min.js"></script>
-<script src="/public/bower_components/crossroads/dist/crossroads.min.js"></script>
+<div class="row" id="main-page">
+    <div>
+        <button onclick="getUserData()">button</button>
+    </div>
+</div>
 
-<script src="/public/app/js/comm.js"></script>
-<script src="/public/app/js/app.js"></script>
-<script src="/public/app/js/controllers/main.js"></script>
-<script src="/public/app/js/models/main.js"></script>
+<script src="/tavili/public/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/tavili/public/bower_components/jpillora/jquery.rest/dist/1/jquery.rest.min.js"></script>
+<script src="/tavili/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/tavili/public/bower_components/knockout/dist/knockout.js"></script>
+<script src="/tavili/public/bower_components/ko.remote-template-engine/dist/ko.remote-template-engine.min.js"></script>
+<script src="/tavili/public/bower_components/js-signals/dist/signals.min.js"></script>
+<script src="/tavili/public/bower_components/hasher/dist/js/hasher.min.js"></script>
+<script src="/tavili/public/bower_components/crossroads/dist/crossroads.min.js"></script>
+
+<script src="/tavili/public/app/js/comm.js"></script>
+<script src="/tavili/public/app/js/app.js"></script>
+<script src="/tavili/public/app/js/controllers/main.js"></script>
+<script src="/tavili/public/app/js/models/main.js"></script>
+<script src="/tavili/public/app/js/models/pullData.js"></script>
+
 
 </body>
 </html>
