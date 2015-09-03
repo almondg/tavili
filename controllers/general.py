@@ -33,7 +33,7 @@ def user_path():
     return ctrl.send_static_file(os.path.join("app", "index.html"))
 
 @ctrl.route("/login")
-def user_path():
+def login_path():
     return ctrl.send_static_file(os.path.join("app", "Login.html"))
 
 

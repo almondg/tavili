@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Facebook Login JavaScript Example</title>
-<meta charset="UTF-8">
+  <title>Facebook Login JavaScript Example</title>
+  <meta charset="UTF-8">
+  <link type="text/css" rel="stylesheet" href="/public/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link type="text/css" rel="stylesheet" href="/public/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 </head>
 <body>
 
@@ -11,14 +13,25 @@
   the JavaScript SDK to present a graphical Login button that triggers
   the FB.login() function when clicked.
 -->
-
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-
-<div id="status">
+<div class="row" style="padding-top: 200px;">
+  <div class="col-xs-4"></div>
+  <div class="col-xs-4">
+    <div class="text-center">
+      <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+      </fb:login-button>
+      <div id="status">
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-4"></div>
 </div>
 
-<script src="main_js.js"></script>
+
+
+<script src="/public/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/public/bower_components/knockout/dist/knockout.js"></script>
+<script src="/public/app/main_js.js"></script>
 <script>
     window.fbAsyncInit = function() {
       FB.init({
