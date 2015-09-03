@@ -25,7 +25,7 @@
 function loginWithID(response) {
       FB.api('/me?fields=id', function (response) {
           console.log("response is" + response.id);
-          window.location.href = 'home.html?id=' + response.id;
+          //window.location.href = 'home.html?id=' + response.id;
       });
   };
 
@@ -37,7 +37,7 @@ function logout_of_fb(){
                 });
             }
         });
-    window.location.href = 'login.html';
+    //window.location.href = 'templates/Login.html';
     }
 
   // This is called with the results from from FB.getLoginStatus().
