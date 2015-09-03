@@ -8,7 +8,7 @@ MONGODB_SETTINGS = {
 }
 
 # Web URL settings.
-WEB_SHORT_DOMAIN = "localhost:443"
+WEB_SHORT_DOMAIN = "localhost:5000"
 WEB_FULL_DOMAIN = "http://localhost/"
 WEB_USE_HTTPS = False
 WEB_USE_SUBDOMAINS = False

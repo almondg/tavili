@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Facebook Login JavaScript Example</title>
-  <meta charset="UTF-8">
-  <link type="text/css" rel="stylesheet" href="/public/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link type="text/css" rel="stylesheet" href="/public/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <title>Facebook Login JavaScript Example</title>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link type='text/css' rel='stylesheet' href='http://fonts.googleapis.com/css?family=Montserrat'>
+    <link type='text/css' rel='stylesheet' href='http://fonts.googleapis.com/css?family=Montserrat'>
+    <link type='text/css' rel='stylesheet' href='http://sscol.jebal.comuv.com/css/font.css'>
+    <link type='text/css' rel='stylesheet' href='login.css'>
+
 </head>
 <body>
 
-<!--
-  Below we include the Login Button social plugin. This button uses
-  the JavaScript SDK to present a graphical Login button that triggers
-  the FB.login() function when clicked.
--->
-<div class="row" style="padding-top: 200px;">
-  <div class="col-xs-4"></div>
-  <div class="col-xs-4">
-    <div class="text-center">
-      <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+<div class="ribbon"></div>
+  <div class="login">
+  <h1>Friend Shipping</h1>
+  <h3>The world is just a click away!</h3>
+  <form action="login">
+      <fb:login-button scope="public_profile,email,user_about_me,user_friends,user_tagged_places,user_location,user_posts" onlogin="checkLoginState();">
       </fb:login-button>
-      <div id="status">
-      </div>
-    </div>
+   </form>
+
   </div>
-  <div class="col-xs-4"></div>
-</div>
+    <br/>
+    <br/>
+    <img class="center-block" src="facebook_suitcase.jpg" align="center">
 
 
-
-<script src="/public/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/public/bower_components/knockout/dist/knockout.js"></script>
-<script src="/public/app/main_js.js"></script>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/knockout/dist/knockout.js"></script>
+<script src="../app/main_js.js"></script>
 <script>
     window.fbAsyncInit = function() {
       FB.init({
