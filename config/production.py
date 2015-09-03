@@ -3,7 +3,6 @@
 MONGODB_SETTINGS = {
   "db": "heroku_t2vv4d0p",
   "host": "mongodb://tavili:tavilitavili99@ds035563.mongolab.com:35563/heroku_t2vv4d0p",
-  "port": 35563,
 }
 
 # Web URL settings.
@@ -21,6 +20,12 @@ TOKEN_ROLE_SETTINGS = {
   "USER": {
     "COOKIE_TIMEOUT": 24*60*60,  # 1 day.
     "SESSION_TIMEOUT": 30*60,  # 30 minutes.
+  },
+  "CLIENT": {
+    "COOKIE_TIMEOUT": 30*24*60*60,  # 1 month.
+  },
+  "ADMIN": {
+    "COOKIE_TIMEOUT": 24*60*60,  # 1 day.
   },
 }
 
