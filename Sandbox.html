@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sandbox</title>
+<meta charset="UTF-8">
+</head>
+<body>
+<form action="action_page.php">
+  Product:<br>
+  <input type="text" name="product" value="">
+  <br>
+  Country:<br>
+  <input type="text" name="lastname" value="">
+  <br>
+  Amazon URL:<br>
+  <input type="Amazon URL" name="URL" value="">
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+
+<button onclick="getData(response)">Get data</button>
+
+<br/><br/><br/><br/>
+
+
+<script>
+
+
+    var getData = function(response){
+        '/me?fields=id', function (response) {
+          console.log("response is" + response.id);
+      });
+    };
+
+</script>
+
+<!--
+  Below we include the Login Button social plugin. This button uses
+  the JavaScript SDK to present a graphical Login button that triggers
+  the FB.login() function when clicked.
+-->
+<script src="main_js.js"></script>
+
+
+
+<div id="status">
+</div>
+
+</body>
+</html>
