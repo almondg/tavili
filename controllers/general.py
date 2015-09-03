@@ -6,6 +6,8 @@ from dateutil.parser import parse
 from flask import Blueprint, jsonify, request, g
 from mongoengine import Q
 
+from models.all import *
+
 class GeneralController(Blueprint):
 
     def getUserInfo(self):
@@ -13,11 +15,9 @@ class GeneralController(Blueprint):
       Returns the User info for the currently logged in User.
       If the User is active, the list of Debts are returned as well.
       """
-      user = g.user
-      if not user:
-        return None
+      users = User.objects().all()
 
-      return user.toFullJson()
+      return [user.toMinimalJson() for user in users]
 
 ctrl = GeneralController("general", __name__, static_folder="../public")
 

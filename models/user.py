@@ -15,7 +15,7 @@ class User(Document):
   def toMinimalJson(self):
     return {
       "userId": self.user_id,
-      "wishlist": [item.toMinimalJson for item in self.wishlist],
+      "wishlist": [item.toMinimalJson() for item in self.wishlist],
     }
 
   def toFullJson(self):
