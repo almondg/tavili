@@ -12,7 +12,7 @@ def seed_users():
   wishItem1 = WishItem(location="Germany", product="iPhone 5")
 
   user1 = User()
-  user1.wishlist.append(wishItem1)
+  user1.wishList.append(wishItem1)
 
   user1.save()
 
