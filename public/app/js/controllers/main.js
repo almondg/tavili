@@ -26,8 +26,9 @@ function MainController() {
     });
     crossroads.addRoute("home", function() {
       self.model.update();
-      self.model.wishListModel.update();
       self.model.currentView("home");
+      console.log("Call wishListModel update");
+      self.model.wishListModel.update();
     });
   };
 

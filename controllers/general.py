@@ -71,18 +71,17 @@ def get_user_info():
 
 @ctrl.route("/api/user/login/", methods=["POST"])
 def login_user():
-  facebook_id = request.form.get("facebookId")
+  facebook_id = request.form.get("userId")
   name = request.form.get("name")
-  location = request.form.get("currentLocation")
+  location = request.form.get("country")
   address = request.form.get("address")
-  friends_list = request.form.get("friendsList")
-  access_token = request.form.get("accessToken")
+  friends_list = request.form.get("friendIds")
   email = request.form.get("email")
 
-  result = ctrl.handleFacebookLogin(facebook_id, name, location, address, friends_list, access_token, email)
+  result = ctrl.handleFacebookLogin(facebook_id, name, location, address, friends_list, None, email)
   return jsonify(result=result)
 
-@ctrl.route("/add_to_wishlist", methods=["POST"])
+@ctrl.route("/api/add_to_wishlist", methods=["POST"])
 def add_to_wishlist():
     product = request.form.get("product")
     location = request.form.get("location")
@@ -90,7 +89,7 @@ def add_to_wishlist():
     result = ctrl.handleAddToWishList(facebook_id, location, product)
     return jsonify(result=result)
 
-@ctrl.route("/get_wishlist/<fb_id>")
+@ctrl.route("/api/get_wishlist/<fb_id>/")
 def get_to_wishlist(fb_id):
     result = ctrl.getUserWishList(fb_id)
     return jsonify(result=result)
