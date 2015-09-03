@@ -77,7 +77,7 @@ def add_to_wishlist():
     return jsonify(result=result)
 
 @ctrl.route("/get_wishlist", methods=["POST"])
-def add_to_wishlist():
+def get_to_wishlist():
     facebook_id = request.form.get("fb_id")
     result = ctrl.getUserWishList(facebook_id)
     return jsonify(result=result)

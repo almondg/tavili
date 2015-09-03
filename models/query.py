@@ -3,10 +3,17 @@ __author__ = 'Ronny'
 from facepy import GraphAPI
 from models.all import *
 
+from lib.mandrill_service import MandrillCommunicationService
+
 class Query:
   # check if there's a friend in the location of my new wish
   # pre - a new wish in the users list
   # returns - list of user_id of the friends in the new wish's location
+
+  def __init__(self):
+    self.mandrill_service = MandrillCommunicationService()
+    self.mandrill_service.initialize()
+
 
   def addToWishList(self, user, wish_item):
     relevantFriends = []
@@ -16,15 +23,9 @@ class Query:
         relevantFriends.append(friend.user_id)
         print (friend.user_id, "can get you a ", wish_item.product)
 
-    token_app = ""
     if len(relevantFriends) > 0:
-      graphAPI = GraphAPI(user.access_token)
-      graphAPI.post(
-                            path="me/notifications",
-                            template="You Have a New Friend Want to Fulfill Your Wish!",
-                            href="http://intense-badlands-1277.herokuapp.com/",
-                            access_token=token_app
-      )
+      self.mandrill_service.send("friendshipping@gmail.com", user.email, "Updates from FriendShipping App",
+                                 "You have a new friend want to fulfill your wish. Enter the app and connect your friend.")
     return relevantFriends
 
   # check if there's a friend's wish in the location the user's traveling to
@@ -37,6 +38,11 @@ class Query:
       for wish in friend.wishList:
         if wish.loaction == location:
           relevantFriends.append(friend.user_id)
-          print(friend.user_id, "wants a ", wish.product)
+          self.mandrill_service.send("friendshipping@gmail.com", friend.email, "Updates from FriendShipping App",
+                                 "You have a new friend want to fulfill your wish. Enter the app and connect your friend.")
+
+    if len(relevantFriends) > 0:
+      self.mandrill_service.send("friendshipping@gmail.com", user.email, "Updates from FriendShipping App",
+                                 "You have a new friend you can help to fulfill his wish. Enter the app and connect your friend.")
 
     return relevantFriends
