@@ -12,6 +12,7 @@ class User(Document):
   address = StringField() #/will get from login
   wish_list = ListField(EmbeddedDocumentField(WishItem))
   friend_list = ListField() #/will get from login
+  access_token = StringField()
 
   def toMinimalJson(self):
     return {
@@ -20,7 +21,7 @@ class User(Document):
       "location" : self.current_location,
       "address" : self.address,
       "wishList": [item.toMinimalJson() for item in self.wish_list],
-      "friendList": [item for item in self.friend_list]
+      "friendList": [item for item in self.friend_list],
     }
 
   def toFullJson(self):

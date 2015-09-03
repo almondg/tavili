@@ -8,7 +8,6 @@ from mongoengine import Q
 import os
 
 from models.all import *
-from models.query import *
 
 class GeneralController(Blueprint):
 
@@ -21,28 +20,20 @@ class GeneralController(Blueprint):
 
       return [user.toMinimalJson() for user in users]
 
-    def handleFacebookLogin(self, facebook_id, location, address, friends_list):
+    def handleFacebookLogin(self, facebook_id, location, address, friends_list, access_token):
       user = User.objects(facebook_id=facebook_id).get()
       if user:
         user.current_location = location
         user.address = address
         user.friend_list = friends_list
+        user.access_token = access_token
         user.save()
       else:
         user = User(facebook_id=facebook_id, current_location=location, address=address,
                     friends_list=friends_list)
         user.save()
 
-    def getUserWishList(self, facebook_id):
-      user = User.objects(facebook_id=facebook_id).get()
-      return user.wish_list
-
-    def handleAddToWishList(self, facebook_id, location, product):
-      user = User.objects(facebook_id=facebook_id).get()
-      q = Query()
-      q.addToWishList(user, WishItem(location,product))
-      return self.getUserWishList(facebook_id)
-      #return "Successfully added item to wishlist."
+      return "Successfully Logged In."
 
 ctrl = GeneralController("general", __name__, static_folder="../public")
 
@@ -66,19 +57,6 @@ def login_path():
 def home_path():
     return ctrl.send_static_file(os.path.join("app", "Home.html"))
 
-@ctrl.route("/add_to_wishlist", methods=["POST"])
-def add_to_wishlist():
-    product = request.form.get("product")
-    location = request.form.get("location")
-    facebook_id = request.form.get("fb_id")
-    result = ctrl.handleAddToWishList(facebook_id, location, product)
-    return jsonify(result=result)
-
-@ctrl.route("/get_wishlist", methods=["POST"])
-def add_to_wishlist():
-    facebook_id = request.form.get("fb_id")
-    result = ctrl.getUserWishList(facebook_id)
-    return jsonify(result=result)
 
 @ctrl.route("/api/user/info/")
 def get_user_info():
@@ -93,7 +71,7 @@ def login_user():
   location = request.form.get("currentLocation")
   address = request.form.get("address")
   friends_list = request.form.get("friendsList")
+  access_token = request.form.get("accessToken")
 
-  result = ctrl.handleFacebookLogin(facebook_id, location, address, friends_list)
+  result = ctrl.handleFacebookLogin(facebook_id, location, address, friends_list, access_token)
   return jsonify(result=result)
-
