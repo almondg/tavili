@@ -1,5 +1,3 @@
-var comm = require("../comm");
-var MainModel = require("../models/main");
 
 function MainController() {
   var self = this;
@@ -12,7 +10,7 @@ function MainController() {
 
     // Construct the underlying model and provide it with a fetcher object for
     // the server data.
-    self.model = new MainModel(comm);
+    self.model = new MainModel(serverComm);
     self.model.initialize();
     self.model.update();
 
@@ -23,11 +21,15 @@ function MainController() {
     // Define the controller routes.
     crossroads.addRoute("/", function() {
       self.model.update();
-      self.model.currentView("accounts");
+      self.model.currentView("login");
     });
-    crossroads.addRoute("/login", function() {
+    crossroads.addRoute("login", function() {
       self.model.update();
       self.model.currentView("login");
+    });
+    crossroads.addRoute("home", function() {
+      self.model.update();
+      self.model.currentView("home");
     });
   };
 
@@ -38,4 +40,3 @@ function MainController() {
 
 }
 
-module.exports = MainController;
