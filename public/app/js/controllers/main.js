@@ -12,7 +12,6 @@ function MainController() {
     // the server data.
     self.model = new MainModel(serverComm);
     self.model.initialize();
-    self.model.update();
 
     // Register the model in the view.
     ko.applyBindings(self.model,
@@ -20,15 +19,14 @@ function MainController() {
 
     // Define the controller routes.
     crossroads.addRoute("/", function() {
-      self.model.update();
       self.model.currentView("login");
     });
     crossroads.addRoute("login", function() {
-      self.model.update();
       self.model.currentView("login");
     });
     crossroads.addRoute("home", function() {
       self.model.update();
+      self.model.wishListModel.update();
       self.model.currentView("home");
     });
   };

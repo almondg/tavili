@@ -37,6 +37,18 @@ class GeneralController(Blueprint):
 
       return "Successfully Logged In."
 
+
+    def getUserWishList(self, facebook_id):
+      user = User.objects(facebook_id=facebook_id).get()
+      return user.wish_list
+
+    def handleAddToWishList(self, facebook_id, location, product):
+      user = User.objects(facebook_id=facebook_id).get()
+      q = Query()
+      q.addToWishList(user, WishItem(location,product))
+      return self.getUserWishList(facebook_id)
+
+
 ctrl = GeneralController("general", __name__, static_folder="../public")
 
 # Signal handlers.
@@ -69,3 +81,16 @@ def login_user():
 
   result = ctrl.handleFacebookLogin(facebook_id, name, location, address, friends_list, access_token, email)
   return jsonify(result=result)
+
+@ctrl.route("/add_to_wishlist", methods=["POST"])
+def add_to_wishlist():
+    product = request.form.get("product")
+    location = request.form.get("location")
+    facebook_id = request.form.get("fb_id")
+    result = ctrl.handleAddToWishList(facebook_id, location, product)
+    return jsonify(result=result)
+
+@ctrl.route("/get_wishlist/<fb_id>")
+def get_to_wishlist(fb_id):
+    result = ctrl.getUserWishList(fb_id)
+    return jsonify(result=result)

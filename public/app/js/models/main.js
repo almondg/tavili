@@ -15,7 +15,11 @@ function MainModel(source) {
       return;
     }
 
-    self.res_view_model = new WishListViewModel();
+    self.userData = ko.observable();
+
+    self.currentUserId = ko.observable();
+
+    self.wishListModel = new WishListViewModel(self.source, self.currentUserId);
 
     window.fbAsyncInit = function () {
       FB.init({
@@ -37,6 +41,15 @@ function MainModel(source) {
       //    your app or not.
       //
       // These three cases are handled in the callback function.
+
+      (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "http://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
 
       FB.getLoginStatus(function (response) {
         statusChangeCallback(response);
@@ -62,28 +75,10 @@ function MainModel(source) {
 
   /* Fetches new data from the server and updates the model. */
   self.update = function () {
-
-    // Update the debt list model and user parameters from the source.
-    //self.source.user.info.read(self.user.user_id)
-    //  .fail(function (error) {
-    //    console.log("Error occured at /api/user/info/:");
-    //    console.log(error);
-    //    notification_view.notifyError(
-    //      "<strong>Update from server failed!</strong> " +
-    //      "Try refreshing the page.");
-    //  })
-    //  .done(function (data) {
-    //    // Check for errors or missing data.
-    //    if (!data || !data.info) {
-    //      console.log("Invalid data returned from /api/user/info/:");
-    //      console.log(data);
-    //      return;
-    //    }
-    //
-    //    // Construct the User model from the data.
-    //    self.user(new User(data.info));
-    //  });
-
+    initMainControllerUserData();
+    getUserData();
+    console.log("User Data Is: ");
+    console.log(self.userData());
   };
 
 
@@ -91,15 +86,8 @@ function MainModel(source) {
    * LOGIN UTILS
    * */
 
-    // Load the SDK asynchronously
-  (function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s);
-    js.id = id;
-    js.src = "http://connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
+  // Load the SDK asynchronously
+
 
   // This function is called when someone finishes with the Login
   // Button.  See the onlogin handler attached to it in the sample
@@ -179,30 +167,43 @@ function MainModel(source) {
   }
 
 // Overall viewmodel for this screen, along with initial state
-  function WishListViewModel(source) {
+  function WishListViewModel(source, currentUserId) {
     var self = this;
 
-    // Non-editable catalog data - would come from the server
+    self.source = source;
 
-    self.WishListDataArray = [
+    self.currentUserId = currentUserId;
+
+    self.WishListDataArray = ko.observableArray([
       {product: "item1", location: 'Israel'},
       {product: "item2", location: 'USA'},
       {product: "item3", location: 'France'},
       {product: "iphone4", location: 'UK'}
-    ];
+    ]);
 
-    /**
-    self.WishListDataArray = ko.observableArray();
+    self.update = function () {
+      self.source.get_wishlist.read(String(self.currentUserId()))
+        .fail(function (error) {
+          console.log("Error occurred on: /api/get_wishlist on id: " + self.currentUserId());
+          console.log(error);
+        })
+        .done(function (data) {
+          if (!data || !data.result) {
+            console.log("Error on data from: /api/get_wishlist with: " + self.currentUserId());
+            console.log(data);
+          }
+          self.WishListDataArray(data.result);
+        });
 
-    var fb_id = "123456";
-    self.source.get_wishlist.create(fb_id).fail(function(error) {}).done(function(data) {
-      self.WishListDataArray(data.result);
-    });
-    */
-    self.wish_list_items = [];
-    for (var i = 0; i < self.WishListDataArray.length; i++) {
-      self.wish_list_items.push(new WishListItem(self.WishListDataArray[i]));
+      self.wish_list_items = self.WishListDataArray().map(function (wish_item) {
+        return new WishListItem(wish_item);
+      });
+
+      console.log(self.wish_list_items);
+
+      self.WishListDataArray(self.wish_list_items);
     }
+
   }
 }
 
@@ -210,10 +211,11 @@ function MainModel(source) {
 function loginWithID(response) {
   console.log(response);
   FB.api('/me?fields=id', function (response) {
+    console.log(response);
     console.log("response is: " + response.id);
     //window.location.href = 'home.html?id=' + response.id;
     mainController.model.currentView("home");
-    console.log(mainController.model.currentView);
+    mainController.model.currentUserId(response.id);
   });
 }
 
@@ -222,7 +224,7 @@ function logout_of_fb() {
     if (response.status === 'connected') {
       FB.logout(function (response) {
         console.log("User logged out successfully!!!");
-        window.location.href = 'index.html';
+        mainController.model.currentView("login");
       });
     }
   });
