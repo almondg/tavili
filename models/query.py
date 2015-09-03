@@ -10,6 +10,7 @@ class Query (){
         for friend in user.friendList:
             if friend.location == WishItem.location:
                 relevantFriends.append(friend.user_id)
+                print (friend.user_id, "can get you a " ,WishItem.product )
 
         return relevantFriends
 
@@ -23,6 +24,7 @@ class Query (){
             for wish in friend.wishList:
                 if wish.loaction == location:
                     relevantFriends.append(friend.user_id)
+                    print(friend.user_id ,"wants a " , wish.product)
 
         return relevantFriends
 }
