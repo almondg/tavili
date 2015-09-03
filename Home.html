@@ -22,18 +22,18 @@
 
 <br/><br/><br/><br/>
 
-<table style="width:100%">
+<h2>My Wishlist!</h2>
 
-  <tr>
-    <td>Jill</td>
-    <td>Smith</td>
-    <td>50</td>
-  </tr>
-  <tr>
-    <td>Eve</td>
-    <td>Jackson</td>
-    <td>94</td>
-  </tr>
+<table>
+    <thead><tr>
+        <th>Product</th><th>Location</th><th></th>
+    </tr></thead>
+    <tbody data-bind="foreach: wish_list_items">
+    <tr>
+        <td data-bind="text: product"></td>
+        <td data-bind="text: location"></td>
+    </tr>
+</tbody>
 </table>
 
 <script>
@@ -61,8 +61,7 @@ function post(path, params, method) {
     form.submit();
 }
 
-    var logout_of_fb = function(response){
-        if (response.status==='connected'){
+    var logout_of_fb = function(){
             FB.logout(function(response) {
                 console.log("User logged out successfully!!!");
             });
@@ -77,11 +76,9 @@ function post(path, params, method) {
   the FB.login() function when clicked.
 -->
 
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-
 <div id="status">
 </div>
 
+<script src="main_js.js"></script>
 </body>
 </html>

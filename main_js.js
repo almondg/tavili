@@ -97,3 +97,49 @@ function loginWithID(response) {
         'into Facebook.';
     }
   }
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+// Class to represent a row in the wishlist
+function WishListItem(item_data) {
+    var self = this;
+    self.product = item_data.product;
+    self.location = item_data.location;
+  console.log("sucessfully created item: " + item_data.product + " " + item_data.location);
+}
+
+// Overall viewmodel for this screen, along with initial state
+function WishListViewModel(source) {
+    var self = this;
+
+    // Non-editable catalog data - would come from the server
+    self.WishListDataArray = [
+        { item_name: "item1", location: 'Israel'},
+        { item_name: "item2", location: 'USA'},
+        { item_name: "item3", location: 'France'},
+        { item_name: "iphone4", location: 'UK' }
+    ];
+    // Editable data
+    self.wish_list_items = ko.observableArray([
+        new WishListItem({item_name: "item3", location: 'France'}),
+        new WishListItem({item_name: "item2", location: 'USA'})
+    ]);
+
+  /**
+   *     self.WishListArray = somehow generate the array with source
+   *
+   *     self.wish_list_items = []
+   *     for (var i = 0; i < WishListArray.length; i++) {
+   *        wish_list_items.push(new WishListItem(WishListArray[i]));
+   *     }
+   *
+
+  // display all values
+
+      console.log(arr[i]);
+  }
+   *
+   */
+}
+
+ko.applyBindings(new WishListViewModel());
