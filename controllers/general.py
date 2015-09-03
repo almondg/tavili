@@ -36,6 +36,10 @@ def user_path():
 def login_path():
     return ctrl.send_static_file(os.path.join("app", "Login.html"))
 
+@ctrl.route("/home")
+def home_path():
+    return ctrl.send_static_file(os.path.join("app", "Home.html"))
+
 
 @ctrl.route("/api/user/info/")
 def get_user_info():
