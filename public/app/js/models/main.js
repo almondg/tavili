@@ -52,30 +52,46 @@ function MainModel(source) {
     finalCountry.subscribe(function () {
       console.log(extractUserData());
       self.source.user.login.create(extractUserData())
-        .fail(function (error) {
-          console.log("Error send login");
-          console.log(error);
-        })
-        .done(function (data) {
-          console.log("Success send login");
-          console.log(data);
-        })
+          .fail(function (error) {
+            console.log("Error send login");
+            console.log(error);
+          })
+          .done(function (data) {
+            console.log("Success send login");
+            console.log(data);
+          })
     });
   };
 
-  self.addWishItem = function() {
-    self.source.add_to_wishlist.create({ product: self.product, location: self.location, fb_id: self.userData().userId })
-      .fail(function(error) {
-        console.log(error);
-      })
-      .done(function(data) {
-        if (!data || !data.result) {
-          console.log("Error");
-          return;
-        }
-        self.wishListModel.WishListDataArray(data.result);
-      });
+  self.addWishItem = function () {
+    self.source.add_to_wishlist.create({product: self.product, location: self.location, fb_id: self.userData().userId})
+        .fail(function (error) {
+          console.log(error);
+        })
+        .done(function (data) {
+          if (!data || !data.result) {
+            console.log("Error");
+            return;
+          }
+          self.wishListModel.WishListDataArray(data.result);
+        });
   };
+
+  self.removeFromWishList = function (item) {
+    var item_id = item.item_id;
+    console.log("in removeFromWishList: " + item_id);
+    self.source.remove_from_wishlist.create({item_id: item_id, fb_id: self.userData().userId})
+        .fail(function (error) {
+          console.log(error);
+        })
+        .done(function (data) {
+          if (!data || !data.result) {
+            console.log("Error");
+            return;
+          }
+          self.wishListModel.WishListDataArray(data.result);
+        });
+    };
 
   function extractUserData() {
     var data = self.userData();
@@ -179,7 +195,8 @@ function MainModel(source) {
     var self = this;
     self.product = item_data.product;
     self.location = item_data.location;
-    console.log("sucessfully created item: " + item_data.product + " " + item_data.location);
+    self.item_id = item_data.itemId;
+    console.log("sucessfully created item: " + item_data.product + " " + item_data.location + " " + item_data.itemId);
   }
 
 // Overall viewmodel for this screen, along with initial state
@@ -191,10 +208,10 @@ function MainModel(source) {
     self.currentUserId = currentUserId;
 
     self.WishListDataArray = ko.observableArray([
-      {product: "item1", location: 'Israel'},
-      {product: "item2", location: 'USA'},
-      {product: "item3", location: 'France'},
-      {product: "iphone4", location: 'UK'}
+      {product: "item1", location: 'Israel', item_id: "1"},
+      {product: "item2", location: 'USA', item_id: "2"},
+      {product: "item3", location: 'France', item_id: "3"},
+      {product: "iphone4", location: 'UK', item_id: "4"}
     ]);
 
     self.update = function () {

@@ -35,6 +35,14 @@ class Query:
                                  "Updates from FriendShipping App", msg)
     return relevantFriends
 
+  def removeFromWishList(self, user, item_id):
+    print "HOLY MOLY!! IN THE removeFromWishList FUNCTION!"
+    try:
+      user.wish_list = [x for x in user.wish_list if x.item_id != item_id]
+      user.save()
+    except:
+      pass
+
   # check if there's a friend's wish in the location the user's traveling to
   # returns - list of user_id of the friends that needs something from the users' location
 

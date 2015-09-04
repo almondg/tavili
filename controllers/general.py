@@ -53,6 +53,15 @@ class GeneralController(Blueprint):
     except:
       return None
 
+  def handleRemoveFromWishList(self, facebook_id, item_id):
+    try:
+      user = User.objects(facebook_id=facebook_id).get()
+      q = Query()
+      q.removeFromWishList(user, item_id)
+      return self.getUserWishList(facebook_id)
+    except:
+      return None
+
 
 ctrl = GeneralController("general", __name__, static_folder="../public")
 
@@ -93,6 +102,12 @@ def add_to_wishlist():
   result = ctrl.handleAddToWishList(facebook_id, location, product)
   return jsonify(result=result)
 
+@ctrl.route("/api/remove_from_wishlist/", methods=["POST"])
+def remove_from_wishlist():
+  item_id = request.form.get("item_id")
+  facebook_id = request.form.get("fb_id")
+  result = ctrl.handleRemoveFromWishList(facebook_id, item_id)
+  return jsonify(result=result)
 
 @ctrl.route("/api/get_wishlist/<fb_id>/")
 def get_to_wishlist(fb_id):

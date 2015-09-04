@@ -30,7 +30,7 @@
             </div>
             <button data-bind="click: addWishItem" type="submit" class="btn btn-default" style="width: 100px;">Submit</button>
         </form>
-            <br/><br/><br/><br/>
+            <br/><br/>
             <h3>My Wishlist:</h3>
             <div class="CSSTableGenerator">
                 <table class="table" data-bind="with: wishListModel">
@@ -38,12 +38,16 @@
                     <tr>
                         <th>Product</th>
                         <th>Location</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody data-bind="foreach: WishListDataArray">
                     <tr>
                         <td data-bind="text: product"></td>
                         <td data-bind="text: location"></td>
+                        <td> <!-- TODO change location to item_id-->
+                            <button class="btn btn-default" data-bind="'click': $root.removeFromWishList" style="width: 100px;">remove</button>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

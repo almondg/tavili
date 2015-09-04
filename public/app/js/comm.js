@@ -39,4 +39,5 @@ serverComm.user.add("info");
 serverComm.user.add("login");
 serverComm.add("get_wishlist");
 serverComm.add("add_to_wishlist");
+serverComm.add("remove_from_wishlist");
 
