@@ -6,6 +6,15 @@ var country = ko.observable(' ');
 var userAddress = ko.observable(' ');
 var userEmail = ko.observable(' ');
 var userName = ko.observable(' ');
+var done = ko.observable();
+var finalCountry = ko.observable();
+
+country.subscribe(function(c) {
+  if (!done()) {
+    finalCountry(c);
+    done(true);
+  }
+});
 
 function initMainControllerUserData() {
   mainController.model.userData({
@@ -13,7 +22,7 @@ function initMainControllerUserData() {
     posts: postsArr,
     userId: userID,
     numOfPosts: numPosts,
-    country: country,
+    country: finalCountry,
     address: userAddress,
     email: userEmail,
     name: userName,
@@ -44,8 +53,8 @@ function iteratePosts() {
   //console.log("Iterating");
   var i = 0;
   var cand = 0;
-  for (i = numPosts() - 1; i >= 0; i--) {
-    //for (i=0;i<numPosts();i++){
+  //for (i = numPosts() - 1; i >= 0; i--) {
+  for (i=0;i<numPosts();i++){
     var st = '/' + postsArr()[i].id.toString();
     FB.api(st, 'GET', {"fields": "place"}, function (response) {
         //var loc =response.get('place');
