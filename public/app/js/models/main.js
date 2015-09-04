@@ -19,6 +19,10 @@ function MainModel(source) {
 
     self.currentUserId = ko.observable();
 
+    self.product = ko.observable();
+
+    self.location = ko.observable();
+
     self.wishListModel = new WishListViewModel(self.source, self.currentUserId);
 
     // The current view to display.
@@ -44,17 +48,53 @@ function MainModel(source) {
     getUserData();
     console.log("User Data Is: ");
     console.log(self.userData());
+
+    postsArr.subscribe(function () {
+      console.log(extractUserData());
+      self.source.user.login.create(extractUserData())
+        .fail(function (error) {
+          console.log("Error send login");
+          console.log(error);
+        })
+        .done(function (data) {
+          console.log("Success send login");
+          console.log(data);
+        })
+    });
   };
 
-  self.sendLogin = function() {
-    self.user.login.create(self.userData())
+  self.addWishItem = function() {
+    self.source.add_to_wishlist.create({ product: self.product, location: self.location, fb_id: self.userData().userId })
       .fail(function(error) {
-
+        console.log(error);
       })
       .done(function(data) {
-
-      })
+        if (!data || !data.result) {
+          console.log("Error");
+          return;
+        }
+        self.wishListModel.WishListDataArray(data.result);
+      });
   };
+
+  function extractUserData() {
+    var data = self.userData();
+    var js =  {
+      friendIds: String(data.friendIds()),
+      posts: data.posts(),
+      userId: data.userId(),
+      numOfPosts: data.numOfPosts(),
+      country: data.country(),
+      address: data.address(),
+      email: data.email(),
+      name: data.name(),
+    };
+
+    console.log("!!!!!");
+    console.log(js);
+    console.log("!!!!!");
+    return js
+  }
 
   /**
    * LOGIN UTILS

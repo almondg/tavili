@@ -3,14 +3,16 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"></div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
-        <form role="form" method="post" action="add_to_wishlist.html">
+        <form role="form">
             <div class="form-group">
                 <label for="product">Product:</label>
-                <input type="text" name="product" class="form-control" id="product">
+                <input type="text" name="product" class="form-control" id="product"
+                        data-bind="textInput: product">
             </div>
             <div class="form-group">
                 <label for="location">Location:</label>
-                <input type="text" name="location" class="form-control" id="location">
+                <input type="text" name="location" class="form-control" id="location"
+                        data-bind="textInput: location">>
             </div>
             <div class="checkbox">
                 <label><input type="checkbox">needs meches?</label>
@@ -18,7 +20,7 @@
             <div>
                 <input type="hidden" name="fb_id" class="form-control" id="fb_id" value="123456">
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-default" data-bind="click: addWishItem">Submit</button>
         </form>
 
 

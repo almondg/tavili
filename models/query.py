@@ -1,9 +1,9 @@
 __author__ = 'Ronny'
 
-from facepy import GraphAPI
+from mongoengine import *
 from models.all import *
 
-from lib.mandrill_service import MandrillCommunicationService
+from lib.mandrill_service import mandrill_serv
 
 class Query:
   # check if there's a friend in the location of my new wish
@@ -11,16 +11,21 @@ class Query:
   # returns - list of user_id of the friends in the new wish's location
 
   def __init__(self):
-    self.mandrill_service = MandrillCommunicationService()
-    self.mandrill_service.initialize()
+    self.mandrill_service = mandrill_serv
 
 
   def addToWishList(self, user, wish_item):
+    user.wish_list.append(wish_item)
+    user.save()
+
     relevantFriends = []
     for friend_id in user.friend_list:
-      friend = User.objects(user_id=friend_id).get()
-      if friend.location == wish_item.location:
-        relevantFriends.append(friend)
+      try:
+        friend = User.objects(facebook_id=friend_id).get()
+        if friend.current_location == wish_item.location or friend.address == wish_item.location:
+          relevantFriends.append(friend)
+      except:
+        pass
 
     for friend in relevantFriends:
       msg = "".join([friend.name, " is in ", wish_item.location,
@@ -34,18 +39,24 @@ class Query:
   # returns - list of user_id of the friends that needs something from the users' location
 
   def travelToLocation(self, user, location):
+    user.current_location = location
+    user.save()
+
     relevantFriends = []
     for friend_id in user.friend_list:
-      friend = User.objects(user_id=friend_id).get()
-      for wish in friend.wishList:
-        if wish.loaction == location:
-          relevantFriends.append({"friend": friend,
-                                  "wish": wish})
-          msg = "".join([friend.name, " is in ", wish.location,
-                        " and can fulfill your wish to have a ",
-                        wish.product, ". Facebook him =)"])
-          self.mandrill_service.send("friendshipping@gmail.com", friend.email,
-                                     "Updates from FriendShipping App", msg)
+      try:
+        friend = User.objects(user_id=friend_id).get()
+        for wish in friend.wishList:
+          if wish.loaction == location:
+            relevantFriends.append({"friend": friend,
+                                    "wish": wish})
+            msg = "".join([friend.name, " is in ", wish.location,
+                          " and can fulfill your wish to have a ",
+                          wish.product, ". Facebook him =)"])
+            self.mandrill_service.send("friendshipping@gmail.com", friend.email,
+                                       "Updates from FriendShipping App", msg)
+      except:
+        pass
 
     for friend_and_wish in relevantFriends:
       friend = friend_and_wish["friend"]

@@ -6,6 +6,7 @@ var country = ko.observable(' ');
 var userAddress = ko.observable(' ');
 var userEmail = ko.observable(' ');
 var userName = ko.observable(' ');
+
 function initMainControllerUserData() {
   mainController.model.userData({
     friendIds: IDs,
@@ -152,12 +153,16 @@ function getFriendsIDs() {
   var i;
   FB.api('/me', 'GET', {"fields": "friends"},
     function (response) {
+      console.log("RESPONE OF FRIENDS");
+      console.log(response);
       for (i = 0; i < response.friends.data.length; i++) {
         tmpIDs.push(response.friends.data[i].id);
       }
       //console.log("Printing temp result");
       //console.log(tmpIDs);
       IDs(tmpIDs);
+      console.log("IDs OF FRIENDS");
+      console.log(IDs());
       getUserAddress();
     }
   );

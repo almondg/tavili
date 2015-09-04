@@ -3,6 +3,8 @@ from flask.ext.mongoengine import MongoEngine, MongoEngineSessionInterface
 from flask.ext.login import current_user
 import os
 
+from lib.mandrill_service import mandrill_serv
+
 def configure_app(app, db, login_service=None):
   # Choose configuration environment.
   config_name = os.environ.get("SERVER_ENV", "development")
@@ -16,6 +18,8 @@ def configure_app(app, db, login_service=None):
   # Configure database, and set the session to be stored in MongoDB.
   db.init_app(app)
   app.session_interface = MongoEngineSessionInterface(db)
+
+  mandrill_serv.initialize(app.config)
 
   # Saves the user (Employee or User in our case) that requested something
   # from our server into global g of flask.

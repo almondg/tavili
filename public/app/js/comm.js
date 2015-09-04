@@ -34,7 +34,9 @@ var serverComm = new $.RestClient(
     "/api/", { request: request });
 
 // Add the relevant paths.
-serverComm.add("user");
+serverComm.add("user", { isSingle: true });
 serverComm.user.add("info");
+serverComm.user.add("login");
 serverComm.add("get_wishlist");
+serverComm.add("add_to_wishlist");
 

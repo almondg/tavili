@@ -65,3 +65,5 @@ class MandrillCommunicationService:
 
     return result
 
+
+mandrill_serv = MandrillCommunicationService()
