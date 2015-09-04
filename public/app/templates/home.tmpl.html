@@ -1,74 +1,87 @@
-<div id="home-page">
+<div>
     <div class="row">
+        <div class="col-sm-3 col-xs-0"></div>
+        <div class="col-sm-6 col-xs-12">
+            <div class="panel">
+                <div class="panel-heading text-center">
+                    <span><img width="80" height="70" class="img-thumbnail pull-left" src="/public/app/images/facebook_suitcase.jpg" align="center"> <h1 class="text-primary text-center">Friend Shipping</h1></span>
 
-        <div id="page">
-    <div id="header">
-    	<div class="title">Friend Shipping</div>
-        <div class="subText">Get what you want, from wherever you want</div>
-    </div>
-
-    <div id="pageContent">
-        <div class="articleTitle">Submit new item</div>
-
-        <div class="articleContent">
-
-            <select class="input-medium bfh-countries" data-country="US"></select>
-
-            <form role="form">
-                <div class="form-group">
-                    <label for="product">Product: </label>
-                    <input type="text" name="product" class="form-control" id="product"
-                        data-bind="textInput: product">
+                    <h3 class="text-center" style="color: black;">Get what you want, from wherever you want</h3>
                 </div>
-                <div class="form-group">
-                    <label for="location">Location: </label>
-                    <input type="text" name="location" class="form-control" id="location"
-                        data-bind="textInput: location">
+            </div>
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12">
+                            <h3 class="pull-left" style="color: #3D9970; padding-left: 70px;">Submit new item</h3>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12">
+                            <form style="color: #000; padding-left: 100px; padding-right: 100px;">
+                                <div class="form-group">
+                                    <label for="product">Product: </label>
+                                    <input type="text" name="product" class="form-control" id="product"
+                                           data-bind="textInput: product">
+                                </div>
+                                <div class="form-group">
+                                    <label for="location">Location: </label>
+                                    <input type="text" name="location" class="form-control" id="location"
+                                           data-bind="textInput: location">
+                                </div>
+
+                                <div class="checkbox">
+                                    <label><input type="checkbox">needs meches?</label>
+                                </div>
+                                <div>
+                                    <input type="hidden" name="fb_id" class="form-control" id="fb_id" value="123456">
+                                </div>
+                                <button data-bind="click: addWishItem" type="submit" class="btn btn-primary flat"
+                                        style="width: 100px;">Submit
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <br/><br/>
+                    <hr>
+                    <div style="padding-left: 70px; padding-right: 100px;">
+                        <h3 style="color: #3D9970;">My Wishlist:</h3>
+
+                        <div class="CSSTableGenerator">
+                            <table class="table" data-bind="with: wishListModel" style="color: #0f0f0f; padding-left: 30px;">
+                                <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Location</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody data-bind="foreach: WishListDataArray">
+                                <tr>
+                                    <td data-bind="text: product"></td>
+                                    <td data-bind="text: location"></td>
+                                    <td> <!-- TODO change location to item_id-->
+                                        <button class="btn btn-danger btn-sm" data-bind="'click': $root.removeFromWishList"
+                                                style="width: 100px; margin: 0px; padding: 0px;">remove
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div/>
+
+                            <div style="padding-left: 30px;">
+                            <button class="btn flat btn-primary text-center" onclick="logout_of_fb()"
+                                    style="width: 100px;">Logout
+                            </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="checkbox">
-                    <label><input type="checkbox">needs meches?</label>
-                </div>
-                <div>
-                    <input type="hidden" name="fb_id" class="form-control" id="fb_id" value="123456">
-                </div>
-                <button data-bind="click: addWishItem" type="submit" class="btn btn-default" style="width: 100px;">Submit</button>
-            </form>
-            <br/><br/>
-            <h3>My Wishlist:</h3>
-            <div class="CSSTableGenerator">
-                <table class="table" data-bind="with: wishListModel">
-                    <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Location</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody data-bind="foreach: WishListDataArray">
-                    <tr>
-                        <td data-bind="text: product"></td>
-                        <td data-bind="text: location"></td>
-                        <td> <!-- TODO change location to item_id-->
-                            <button class="btn btn-default" data-bind="'click': $root.removeFromWishList" style="width: 100px;">remove</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div/>
-
-            <button class="text-center" onclick="logout_of_fb()" style="width: 150px;">LOG OUT</button>
-        </div>
-    </div>
-
-
-
-
 
             </div>
+        </div>
+        <div class="col-sm-3 col-xs-0"></div>
     </div>
-
-    <br/><br/><br/>
-
-
 </div>
