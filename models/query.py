@@ -5,6 +5,7 @@ from models.all import *
 
 from lib.mandrill_service import mandrill_serv
 
+
 class Query:
   # check if there's a friend in the location of my new wish
   # pre - a new wish in the users list
@@ -12,7 +13,6 @@ class Query:
 
   def __init__(self):
     self.mandrill_service = mandrill_serv
-
 
   def addToWishList(self, user, wish_item):
     user.wish_list.append(wish_item)
@@ -30,7 +30,7 @@ class Query:
     for friend in relevantFriends:
       msg = "".join([friend.name, " is in ", wish_item.location,
                      " and can fulfill your wish to have a ",
-                    wish_item.product, ". Facebook him =)"])
+                     wish_item.product, ". Facebook him =)"])
       self.mandrill_service.send("friendshipping@gmail.com", user.email,
                                  "Updates from FriendShipping App", msg)
     return relevantFriends
@@ -45,14 +45,14 @@ class Query:
     relevantFriends = []
     for friend_id in user.friend_list:
       try:
-        friend = User.objects(user_id=friend_id).get()
-        for wish in friend.wishList:
-          if wish.loaction == location:
+        friend = User.objects(facebook_id=friend_id).get()
+        for wish in friend.wish_list:
+          if wish.location == location:
             relevantFriends.append({"friend": friend,
                                     "wish": wish})
-            msg = "".join([friend.name, " is in ", wish.location,
-                          " and can fulfill your wish to have a ",
-                          wish.product, ". Facebook him =)"])
+            msg = "".join([user.name, " is in ", wish.location,
+                           " and can fulfill your wish to have a ",
+                           wish.product, ". Facebook him =)"])
             self.mandrill_service.send("friendshipping@gmail.com", friend.email,
                                        "Updates from FriendShipping App", msg)
       except:

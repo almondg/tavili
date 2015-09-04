@@ -49,7 +49,7 @@ function MainModel(source) {
     console.log("User Data Is: ");
     console.log(self.userData());
 
-    postsArr.subscribe(function () {
+    finalCountry.subscribe(function () {
       console.log(extractUserData());
       self.source.user.login.create(extractUserData())
         .fail(function (error) {

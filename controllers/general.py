@@ -6,6 +6,7 @@ from models.all import *
 
 
 class GeneralController(Blueprint):
+
   def getUserInfo(self):
     """
     Returns the User info for the currently logged in User.
@@ -16,6 +17,7 @@ class GeneralController(Blueprint):
     return [user.toMinimalJson() for user in users]
 
   def handleFacebookLogin(self, facebook_id, name, location, address, friends_list, access_token, email):
+    q = Query()
     try:
       user = User.objects(facebook_id=facebook_id).get()
       if user:
@@ -25,11 +27,13 @@ class GeneralController(Blueprint):
         user.access_token = access_token
         user.email = email
         user.save()
+      q.travelToLocation(user, location)
     except:
       user = User(facebook_id=facebook_id, name=name, current_location=location,
                   address=address, friend_list=friends_list, access_token=access_token,
                   email=email)
       user.save()
+      q.travelToLocation(user, location)
 
     return "Successfully Logged In."
 
