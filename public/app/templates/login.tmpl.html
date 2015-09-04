@@ -1,19 +1,29 @@
-<div id="login-page">
-    <div class="ribbon"></div>
-    <div class="login">
-        <h1>Friend Shipping</h1>
+<div id="pageContent">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"></div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="ribbon"></div>
+            <div class="login">
+                <h1>Friend Shipping</h1>
 
-        <h3>The world is just a click away!</h3>
+                <h3>The world is just a click away!</h3>
 
-        <form action="login">
-            <fb:login-button
-                    scope="public_profile,email,user_about_me,user_friends,user_tagged_places,user_location,user_posts"
-                    onlogin="checkLoginState();">
-            </fb:login-button>
-        </form>
-
+                <form action="login">
+                    <fb:login-button
+                            scope="public_profile,email,user_about_me,user_friends,user_tagged_places,user_location,user_posts"
+                            onlogin="checkLoginState();">
+                    </fb:login-button>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"></div>
     </div>
-    <br/>
-    <br/>
-    <img class="center-block" src="/public/app/images/facebook_suitcase.jpg" align="center">
+    <div class="row">
+        <br/><br/>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"></div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <img class="center-block" src="/public/app/images/facebook_suitcase.jpg" align="center">
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"></div>
+    </div>
 </div>
